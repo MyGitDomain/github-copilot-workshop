@@ -40,7 +40,21 @@ function getGrade(percentage) {
   return "Keep practicing";
 }
 
+/**
+ * Formats the remaining countdown into a readable label.
+ */
+function formatTimeLeft(seconds) {
+  const numericSeconds = Number.isFinite(Number(seconds)) ? Number(seconds) : 0;
+  return `⏱ ${Math.max(0, Math.ceil(numericSeconds))}s`;
+}
+
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { shuffle, isCorrect, calculatePercentage, getGrade };
+  module.exports = {
+    shuffle,
+    isCorrect,
+    calculatePercentage,
+    getGrade,
+    formatTimeLeft,
+  };
 }
