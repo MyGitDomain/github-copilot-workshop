@@ -12,6 +12,7 @@ const {
   createQuiz,
   answerQuestion,
   isQuizFinished,
+  isNewBestScore,
 } = require("../src/quiz.js");
 
 test("isCorrect returns true for the right answer", () => {
@@ -116,6 +117,14 @@ test("isQuizFinished reports when the current index has reached the end", () => 
   assert.equal(isQuizFinished(activeState), false);
   assert.equal(isQuizFinished(finishedState), true);
   assert.equal(isQuizFinished({ questions: [], current: 0, score: 0, timeLeft: 15, timerId: null }), true);
+});
+
+test("isNewBestScore returns true for a new high score and null best", () => {
+  assert.equal(isNewBestScore(80, null), true);
+  assert.equal(isNewBestScore(80, 70), true);
+  assert.equal(isNewBestScore(80, 80), false);
+  assert.equal(isNewBestScore(80, 90), false);
+  assert.equal(isNewBestScore(80, undefined), true);
 });
 
 test("getGrade uses inclusive thresholds at 90, 75 and 50", () => {
