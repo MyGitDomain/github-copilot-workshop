@@ -69,6 +69,39 @@ function formatTimeLeft(seconds) {
   return `⏱ ${Math.max(0, Math.ceil(numericSeconds))}s`;
 }
 
+function createQuiz(questions) {
+  const availableQuestions = Array.isArray(questions) ? questions : [];
+
+  return {
+    questions: shuffle(availableQuestions),
+    current: 0,
+    score: 0,
+    timeLeft: 15,
+    timerId: null,
+  };
+}
+
+function answerQuestion(state, selectedIndex) {
+  const currentQuestion = state && Array.isArray(state.questions) ? state.questions[state.current] : null;
+  const correct = currentQuestion ? isCorrect(currentQuestion, selectedIndex) : false;
+
+  return {
+    state: {
+      ...state,
+      score: state.score + (correct ? 1 : 0),
+    },
+    correct,
+  };
+}
+
+function isQuizFinished(state) {
+  if (!state || !Array.isArray(state.questions)) {
+    return false;
+  }
+
+  return state.current >= state.questions.length;
+}
+
 // Lets Node.js tests load this file. Browsers ignore this block.
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
@@ -78,5 +111,8 @@ if (typeof module !== "undefined" && module.exports) {
     getGrade,
     getFeedbackMessage,
     formatTimeLeft,
+    createQuiz,
+    answerQuestion,
+    isQuizFinished,
   };
 }
