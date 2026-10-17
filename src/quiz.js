@@ -34,10 +34,31 @@ function calculatePercentage(score, total) {
  * A = 90% or more, B = 75% or more, C = 50% or more.
  */
 function getGrade(percentage) {
-  if (percentage > 90) return "A";
-  if (percentage > 75) return "B";
-  if (percentage > 50) return "C";
+  if (percentage >= 90) return "A";
+  if (percentage >= 75) return "B";
+  if (percentage >= 50) return "C";
   return "Keep practicing";
+}
+
+/**
+ * Returns a short encouraging message for a grade.
+ */
+function getFeedbackMessage(grade) {
+  const normalizedGrade = String(grade || "").toUpperCase();
+
+  if (normalizedGrade === "A") {
+    return "Excellent work! You nailed it.";
+  }
+
+  if (normalizedGrade === "B") {
+    return "Great job! You’re on a solid streak.";
+  }
+
+  if (normalizedGrade === "C") {
+    return "Nice effort! A little more practice will push you higher.";
+  }
+
+  return "Keep practicing — every round helps you improve.";
 }
 
 /**
@@ -55,6 +76,7 @@ if (typeof module !== "undefined" && module.exports) {
     isCorrect,
     calculatePercentage,
     getGrade,
+    getFeedbackMessage,
     formatTimeLeft,
   };
 }
