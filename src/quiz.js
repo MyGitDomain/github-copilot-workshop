@@ -69,6 +69,26 @@ function formatTimeLeft(seconds) {
   return `⏱ ${Math.max(0, Math.ceil(numericSeconds))}s`;
 }
 
+function isNewBestScore(current, best) {
+  const numericCurrent = Number(current);
+
+  if (!Number.isFinite(numericCurrent)) {
+    return false;
+  }
+
+  if (best === null || typeof best === "undefined") {
+    return true;
+  }
+
+  const numericBest = Number(best);
+
+  if (!Number.isFinite(numericBest)) {
+    return true;
+  }
+
+  return numericCurrent > numericBest;
+}
+
 function createQuiz(questions) {
   const availableQuestions = Array.isArray(questions) ? questions : [];
 
@@ -111,6 +131,7 @@ if (typeof module !== "undefined" && module.exports) {
     getGrade,
     getFeedbackMessage,
     formatTimeLeft,
+    isNewBestScore,
     createQuiz,
     answerQuestion,
     isQuizFinished,
